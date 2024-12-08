@@ -1,0 +1,6 @@
+#!/bin/sh -efu
+
+cd "$(dirname $(realpath $0))"
+. ./jekyll-common.sh
+
+podman run --user 0 -it --rm --userns=keep-id:uid=1000,gid=1000 -v "$PWD:/srv/jekyll:Z" "jekyll/builder:$JEKYLL_VERSION" sh -c "jekyll new --force . && bundle add webrick" 
